@@ -16,6 +16,7 @@ login_form = """
             justify-content: center;
             align-items: center;
             height: 100vh;
+            zoom: 1.3;
         }
         .login-container {
             max-width: 360px;
