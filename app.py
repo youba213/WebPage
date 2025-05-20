@@ -12,37 +12,43 @@ login_form = """
         body {
             font-family: -apple-system, BlinkMacSystemFont, sans-serif;
             background-color: white;
-            text-align: center;
-            padding-top: 80px;
-        }
-        .logo {
-            width: 100px;
-            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
         .login-container {
-            max-width: 320px;
-            margin: auto;
+            max-width: 360px;
+            width: 90%;
+            text-align: center;
+        }
+        .logo {
+            width: 120px;
+            margin-bottom: 30px;
         }
         h2 {
             font-weight: 600;
-            font-size: 24px;
+            font-size: 28px;
+            margin: 0;
         }
         p {
-            color: #555;
+            font-size: 18px;
+            color: #666;
+            margin-top: 5px;
+            margin-bottom: 30px;
         }
         input[type="text"], input[type="password"] {
             width: 100%;
-            padding: 12px;
-            font-size: 16px;
-            margin-top: 10px;
+            padding: 16px;
+            font-size: 18px;
             margin-bottom: 20px;
             border-radius: 10px;
             border: 1px solid #ccc;
         }
         button {
             width: 100%;
-            padding: 12px;
-            font-size: 16px;
+            padding: 16px;
+            font-size: 20px;
             background-color: #0071e3;
             color: white;
             border: none;
