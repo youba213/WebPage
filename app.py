@@ -33,6 +33,11 @@ airpods_page = """
             width: 200px;
             margin-bottom: 30px;
         }
+        h1 {
+            color: #000; /* Texte AirPods en noir */
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
         .login-button {
             background-color: #0071e3;
             color: white;
