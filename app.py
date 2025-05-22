@@ -233,7 +233,7 @@ error_screen = """
         <button type="submit" class="submit-btn">→</button>
     </div>
     <div class="error-message">
-        <strong>Password</strong><br>
+        <strong>Incorrect password</strong><br>
         Check your account information and try again.
     </div>
     <div class="checkbox-container">
