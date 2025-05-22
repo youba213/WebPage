@@ -72,9 +72,9 @@ airpods_page = """
     <h1>AirPods de Youba</h1>
 
      <p class="subtitle">
-            Sign in with your Apple ID to connect and manage your Airpods:
+            Sign In to connect and manage your Airpods:
     </p>
-    <a href="/login" class="login-button">Sign in with Apple ID</a>
+    <a href="/login" class="login-button">Sign In with Apple ID</a>
     <a href="/create-account" class="create-account">Don't have an Apple ID? Create one</a>
 </body>
 </html>
@@ -200,7 +200,7 @@ base_html = """
 <body>
 <div class="login-container">
     <img src="https://i.ibb.co/kddN5ht/Capture-d-cran-du-2025-05-21-09-26-14.png" class="apple-logo">
-    <h2>Sign in with Apple</h2>
+    <h2>Sign In with Apple ID</h2>
     {content}
 </div>
 </body>
