@@ -18,7 +18,7 @@ airpods_page = """
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: #f5f5f7;
+            background-color: white;
             color: white;
             display: flex;
             flex-direction: column;
@@ -69,7 +69,7 @@ base_html = """
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=2.0">
     <title>Compte Apple</title>
     <style>
         body {{
